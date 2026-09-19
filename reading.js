@@ -21,3 +21,19 @@
   document.addEventListener('toggle', schedule, true);
   update();
 })();
+
+// Optional reflection support. No selection or response is stored or transmitted.
+(() => {
+  const questions = ['Whose needs are you attending to, and who gets to say what those needs are?', 'What might you be missing about how others are experiencing this situation?', 'Who can make themselves understood, and whose message is easy to overlook?', 'Which part of the decision can people actually shape together?', 'What would make it possible to disagree without losing your place in the group?', 'Whose account of the problem shapes what the group believes needs to happen?', 'What disagreement needs attention before the group can make a decision?', 'Who gets to say what repair would require after harm?'];
+  const buttons = [...document.querySelectorAll('[data-practice]')];
+  const output = document.querySelector('#practice-question');
+  if (!output) return;
+  buttons.forEach(button => button.addEventListener('click', () => {
+    buttons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    const label = document.createElement('strong');
+    label.textContent = button.textContent;
+    const question = document.createElement('p');
+    question.textContent = questions[Number(button.dataset.practice)];
+    output.replaceChildren(label, question);
+  }));
+})();
